@@ -3,15 +3,15 @@ if (!defined('WPINC')) {
     die('Keep Quite');
 }
 
-if (!class_exists('WMS_Shipping_Method')) {
+if (!class_exists('WMS_Delivery_Shipping_Method')) {
 
-    class WMS_Shipping_Method extends WC_Shipping_Method
+    class WMS_Delivery_Shipping_Method extends WC_Shipping_Method
     {
         public function __construct($instance_id = 0) {
 
-            $this->id = 'wms_shipping';
+            $this->id = 'wms_delivery_shipping';
             $this->instance_id = absint($instance_id);
-            $this->method_title = __('Local Delivery', "woo-maji-shopping");
+            $this->method_title = __('Delivery', "woo-maji-shopping");
             $this->method_description = __('Local delivery within the lower mainland', "woo-maji-shopping");
             $this->supports = array(
                 'shipping-zones',
@@ -21,8 +21,8 @@ if (!class_exists('WMS_Shipping_Method')) {
             );
 
             $this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
-            $this->title = __('WMS Shipping', "woo-maji-shopping");
-            $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Local Delivery', 'woo-maji-shopping');
+            $this->title = __('WMS Delivery Shipping', "woo-maji-shopping");
+            $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Delivery', 'woo-maji-shopping');
             $this->init();
         }
 
@@ -45,10 +45,10 @@ if (!class_exists('WMS_Shipping_Method')) {
             $this->form_fields = array(
 
                 'title' => array(
-                    'title'       => __('WMS Shipping', 'woo-maji-shopping'),
+                    'title'       => __('Delivery', 'woo-maji-shopping'),
                     'type'        => 'text',
                     'description' => __('Title to be display on site', 'woo-maji-shopping'),
-                    'default'     => __('WMS Shipping', 'woo-maji-shopping')
+                    'default'     => __('Delivery', 'woo-maji-shopping')
                 ),
 
             );

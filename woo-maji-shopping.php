@@ -18,6 +18,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         define('WMS_PLUGIN_FILE', __FILE__);
     }
 
+    if (!defined('WMS_PLUGIN_URI')) {
+        define('WMS_PLUGIN_URI', plugins_url('', __FILE__));
+    }
+
     if (!defined('WMS_CONFIG')) {
         define('WMS_CONFIG', [
             'max_limit' => 120,
@@ -34,6 +38,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 'maple-ridge'     => 16,
                 'langley'         => 16,
                 'langley-city'    => 16,
+            ],
+            'public_holidays'=>[ // day/month => 23-09
+                '17-09'
             ]
         ]);
     }

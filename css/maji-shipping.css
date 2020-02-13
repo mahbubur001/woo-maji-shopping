@@ -1,0 +1,8 @@
+.wms-pickup-date-tr,
+.wms-delivery-date-tr {
+    display: none;
+}
+
+.unavailable {
+    background: red;
+}

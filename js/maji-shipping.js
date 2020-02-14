@@ -45,12 +45,17 @@
     });
     $('body').on('updated_checkout', function () {
         let selectedShipping = $("#shipping_method input[name='shipping_method[0]']:checked").val();
-        selectedShipping = selectedShipping.split(':')[0];
-        if ("wms_pickup_shipping" === selectedShipping) {
-            $('tr.wms-pickup-date-tr').show();
+        if ($("#shipping_method input[name='shipping_method[0]']").length === 1) {
+            selectedShipping = $("#shipping_method input[name='shipping_method[0]']").val();
         }
-        if ("wms_delivery_shipping" === selectedShipping) {
-            $('tr.wms-delivery-date-tr').show();
+        if (selectedShipping) {
+            selectedShipping = selectedShipping.split(':')[0];
+            if ("wms_pickup_shipping" === selectedShipping) {
+                $('tr.wms-pickup-date-tr').show();
+            }
+            if ("wms_delivery_shipping" === selectedShipping) {
+                $('tr.wms-delivery-date-tr').show();
+            }
         }
         $('.wms-date').datepicker(dp_obj);
     });

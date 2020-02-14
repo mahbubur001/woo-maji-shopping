@@ -13,6 +13,19 @@ class WMS_Hooks
         add_filter('woocommerce_shipping_methods', [$this, 'add_shipping_method']);
         add_filter('woocommerce_package_rates', [$this, 'package_rates'], 9, 2);
 
+
+        // Validate the custom field.
+        add_action('woocommerce_checkout_process', [$this, 'validate_checkout_field_process']);
+        //Save the order meta with field value
+        add_action('woocommerce_checkout_update_order_meta', [$this, 'checkout_field_update_order_meta']);
+        //Display field value on the order edit page
+        add_action('woocommerce_admin_order_data_after_shipping_address', [$this, 'checkout_field_display_admin_user_order_meta'], 10, 1);
+        // Display order meta in order details section
+        //add_action('woocommerce_order_details_after_order_table_items', [$this, 'checkout_field_display_admin_user_order_meta'], 10, 1);
+        add_action('woocommerce_order_details_after_order_table', [$this, 'checkout_field_display_admin_user_order_meta'], 10, 1);
+        //include the custom order meta to woocommerce mail
+        add_action("woocommerce_email_after_order_table", [$this, "checkout_field_display_admin_user_order_meta"], 10, 1);
+
         // Validate the custom field.
         add_action('woocommerce_review_order_after_shipping', [$this, 'add_delivery_date']);
         add_action('wp_enqueue_scripts', [$this, 'maji_enqueue_scripts']);
@@ -44,13 +57,87 @@ class WMS_Hooks
         return $rates;
     }
 
+    function validate_checkout_field_process() {
+        $chosen_shipping = WC()->session->get('chosen_shipping_methods')[0];
+        $chosen_shipping = explode(':', $chosen_shipping);
+        $chosen_shipping = $chosen_shipping[0];
+        if (!empty($chosen_shipping) && in_array($chosen_shipping, ['wms_pickup_shipping', 'wms_delivery_shipping'])) {
+
+            if ('wms_pickup_shipping' === $chosen_shipping && empty($_POST['wms-pickup-date'])) {
+                wc_add_notice(__('<strong>Pickup date</strong> is a required field.', 'woo-maji-shopping'), 'error');
+            }
+            if ('wms_delivery_shipping' === $chosen_shipping && empty($_POST['wms-delivery-date'])) {
+                wc_add_notice(__('<strong>Delivery date</strong> is a required field.', 'woo-maji-shopping'), 'error');
+            }
+
+            $shipping_type = '';
+            $shipping_label = '';
+            $shipping_raw_date = '';
+            if ('wms_delivery_shipping' === $chosen_shipping && !empty($_POST['wms-delivery-date'])) {
+                $shipping_raw_date = sanitize_text_field($_POST['wms-delivery-date']);
+                $shipping_label = __("Delivery", "woo-maji-shopping");
+                $shipping_type = 'delivery';
+            }
+
+            if ('wms_pickup_shipping' === $chosen_shipping && !empty($_POST['wms-pickup-date'])) {
+                $shipping_raw_date = sanitize_text_field($_POST['wms-pickup-date']);
+                $shipping_label = __("Pickup", "woo-maji-shopping");
+                $shipping_type = 'pickup';
+            }
+            if ($shipping_raw_date) {
+                $shipping_date = DateTime::createFromFormat('l - M n, Y', $shipping_raw_date);
+                if (!$shipping_date) {
+                    wc_add_notice(sprintf(__('<strong>%s</strong> date (%s) format is not validate.', 'woo-maji-shopping'), $shipping_label, $shipping_raw_date), 'error');
+//                    echo $newDateString = $myDateTime->format('m/d/Y');
+                }
+            }
+        }
+    }
+
+    function checkout_field_update_order_meta($order_id) {
+        $chosen_shipping = WC()->session->get('chosen_shipping_methods')[0];
+        $chosen_shipping = explode(':', $chosen_shipping);
+        $chosen_shipping = $chosen_shipping[0];
+        if ('wms_pickup_shipping' === $chosen_shipping && !empty($_POST['wms-pickup-date'])) {
+            update_post_meta($order_id, 'wms_pickup_date', sanitize_text_field($_POST['wms-pickup-date']));
+        }
+        if ('wms_delivery_shipping' === $chosen_shipping && !empty($_POST['wms-delivery-date'])) {
+            update_post_meta($order_id, 'wms_delivery_date', sanitize_text_field($_POST['wms-delivery-date']));
+        }
+    }
+
+    /**
+     * @param $order WC_Order
+     */
+    function checkout_field_display_admin_user_order_meta($order) {
+        $shipping = $order->get_items('shipping');
+        $shipping_method_id = reset($shipping)->get_method_id();
+        $shipping_type = '';
+        $shipping_date = '';
+        if ('wms_delivery_shipping' === $shipping_method_id) {
+            $shipping_type = __('Delivery', "woo-maji-shopping");
+            $shipping_date = get_post_meta($order->get_id(), 'wms_delivery_date', true);
+        } else if ('wms_pickup_shipping' === $shipping_method_id) {
+            $shipping_type = __('Pickup', "woo-maji-shopping");
+            $shipping_date = get_post_meta($order->get_id(), 'wms_pickup_date', true);
+        }
+
+        if ($shipping_type && $shipping_date) {
+            echo sprintf('<p><strong>%s</strong> %s %s %s</p>',
+                __("Shipping:", "woo-maji-shopping"),
+                $shipping_type,
+                __("on", "woo-maji-shopping"),
+                $shipping_date);
+        }
+    }
+
     function add_delivery_date() {
         ?>
         <tr class="wms-pickup-date-tr">
             <th><?php esc_html_e('Choice pickup date', 'woo-maji-shopping'); ?></th>
             <td>
                 <div class="wms-pickup-date-wrap">
-                    <input type="text" class="wms-date wms-pickup-date" name="wms-pickup-date">
+                    <input type="text" class="wms-date wms-pickup-date" autocomplete="off" name="wms-pickup-date">
                 </div>
             </td>
         </tr>
@@ -58,7 +145,7 @@ class WMS_Hooks
             <th><?php esc_html_e('Choice delivery date', 'woo-maji-shopping'); ?></th>
             <td>
                 <div class="wms-delivery-date-wrap">
-                    <input type="text" class="wms-date wms-delivery-date" name="wms-delivery-date">
+                    <input type="text" class="wms-date wms-delivery-date" autocomplete="off" name="wms-delivery-date">
                 </div>
             </td>
         </tr>

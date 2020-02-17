@@ -30,6 +30,7 @@
     var dp_obj = {
         minDate: 0,
         maxDate: 60,
+        firstDay: 0,
         showAnim: "slideDown",
         dateFormat: 'DD - M d, yy',
         beforeShowDay: function (date) {

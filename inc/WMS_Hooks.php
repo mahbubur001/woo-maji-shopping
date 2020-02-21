@@ -41,7 +41,10 @@ class WMS_Hooks
             wp_enqueue_style('maji-shipping', WMS_PLUGIN_URI . '/css/maji-shipping.css');
             wp_enqueue_script('maji-shipping', WMS_PLUGIN_URI . '/js/maji-shipping.js', 'jquery', time(), true);
             wp_localize_script('maji-shipping', 'maji', [
-                'public_holidays' => WMS_CONFIG['public_holidays']
+                'public_holidays' => WMS_CONFIG['public_holidays'],
+                'cities_of_bc'    => WMS_CONFIG['cities_of_bc'],
+                'zone_1'          => WMS_CONFIG['zone_1'],
+                'zone_2'          => WMS_CONFIG['zone_2']
             ]);
         }
     }
@@ -65,9 +68,11 @@ class WMS_Hooks
 
             if ('wms_pickup_shipping' === $chosen_shipping && empty($_POST['wms-pickup-date'])) {
                 wc_add_notice(__('<strong>Pickup date</strong> is a required field.', 'woo-maji-shopping'), 'error');
+                return;
             }
             if ('wms_delivery_shipping' === $chosen_shipping && empty($_POST['wms-delivery-date'])) {
                 wc_add_notice(__('<strong>Delivery date</strong> is a required field.', 'woo-maji-shopping'), 'error');
+                return;
             }
 
             $shipping_type = '';
@@ -88,8 +93,11 @@ class WMS_Hooks
                 $shipping_date = DateTime::createFromFormat('l - M n, Y', $shipping_raw_date);
                 if (!$shipping_date) {
                     wc_add_notice(sprintf(__('<strong>%s</strong> date (%s) format is not validate.', 'woo-maji-shopping'), $shipping_label, $shipping_raw_date), 'error');
-//                    echo $newDateString = $myDateTime->format('m/d/Y');
+                    return;
                 }
+//                $selectedDate = $shipping_date->format('d-m-Y');
+//                $lastValidateDate = $shipping_date->modify('+60 day');
+
             }
         }
     }

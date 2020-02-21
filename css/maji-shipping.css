@@ -3,6 +3,7 @@
     display: none;
 }
 
-.unavailable {
-    background: red;
+.ui-state-disabled .ui-state-default,
+.unavailable .ui-state-default {
+    background: gray;
 }

@@ -1,7 +1,7 @@
 (function ($) {
     'use strict';
-    let disableDates = [];
-        // current_city = $('#billing_city').val() || '';
+    let disableDates = [],
+        current_city = $('#billing_city').val() || '';
 
     function checkHolidaysDates(date) {
         if (disableDates.length === 0) {
@@ -53,7 +53,7 @@
     };
 
     $('body').on('updated_checkout', function () {
-        // current_city = $('#billing_city').val();
+        current_city = $('#billing_city').val();
         let selectedShipping = $("#shipping_method input[name='shipping_method[0]']:checked").val();
         // if ($("#shipping_method input[name='shipping_method[0]']").length === 1) {
         //     selectedShipping = $("#shipping_method input[name='shipping_method[0]']").val();

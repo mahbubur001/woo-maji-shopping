@@ -11,7 +11,7 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
 
             $this->id = 'wms_delivery_shipping';
             $this->instance_id = absint($instance_id);
-            $this->method_title = __('Delivery', "woo-maji-shopping");
+            $this->method_title = __('Delivery (Usually afternoon 1pm to 6pm)', "woo-maji-shopping");
             $this->method_description = __('Local delivery within the lower mainland', "woo-maji-shopping");
             $this->supports = array(
                 'shipping-zones',
@@ -22,7 +22,7 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
 
             $this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
             $this->title = __('WMS Delivery Shipping', "woo-maji-shopping");
-            $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Delivery', 'woo-maji-shopping');
+            $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping');
             $this->init();
         }
 
@@ -45,10 +45,10 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
             $this->form_fields = array(
 
                 'title' => array(
-                    'title'       => __('Delivery', 'woo-maji-shopping'),
+                    'title'       => __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping'),
                     'type'        => 'text',
-                    'description' => __('Title to be display on site', 'woo-maji-shopping'),
-                    'default'     => __('Delivery', 'woo-maji-shopping')
+                    'description' => __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping'),
+                    'default'     => __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping')
                 ),
 
             );

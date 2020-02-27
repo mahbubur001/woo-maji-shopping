@@ -11,7 +11,7 @@ if (!class_exists('WMS_Pickup_Shipping_Method')) {
 
             $this->id = 'wms_pickup_shipping';
             $this->instance_id = absint($instance_id);
-            $this->method_title = __('Pickup (Free)', "woo-maji-shopping");
+            $this->method_title = __('Free Pickup (From 2pm to 6pm)', "woo-maji-shopping");
             $this->method_description = __('Pickup, Free Delivery', "woo-maji-shopping");
             $this->supports = array(
                 'shipping-zones',
@@ -47,10 +47,10 @@ if (!class_exists('WMS_Pickup_Shipping_Method')) {
             $this->form_fields = array(
 
                 'title' => array(
-                    'title'       => __('Pickup (Free)', 'woo-maji-shopping'),
+                    'title'       => __('Free Pickup (From 2pm to 6pm)', 'woo-maji-shopping'),
                     'type'        => 'text',
-                    'description' => __('Title to be display on site', 'woo-maji-shopping'),
-                    'default'     => __('Pickup (Free)', 'woo-maji-shopping')
+                    'description' => __('Free Pickup (From 2pm to 6pm)', 'woo-maji-shopping'),
+                    'default'     => __('Free Pickup (From 2pm to 6pm)', 'woo-maji-shopping')
                 ),
                 'tax_status' => array(
                     'title'   => __( 'Tax status', 'woocommerce' ),

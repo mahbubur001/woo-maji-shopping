@@ -30,15 +30,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 'burnaby'         => 9,
                 'vancouver'       => 9,
                 'new-westminster' => 9,
+                'new-west'        => 9,
                 'west-vancouver'  => 10,
                 'north-vancouver' => 10,
+                'west-van'        => 10,
+                'north-van'       => 10,
                 'surrey'          => 13,
                 'delta'           => 13,
                 'white-rock'      => 12,
                 'coquitlam'       => 14,
                 /*'maple-ridge'     => 16,*/
-                'langley'         => 16,
-                'langley-city'    => 16,
+                /*'langley'         => 16,*/
+                /*'langley-city'    => 16,*/
             ],
             'cities_of_bc'    => [
                 "Burnaby",
@@ -61,12 +64,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 "Sooke",
                 "Colwood",
                 "New Westminster",
+                "New West",
                 "Sparwood",
                 "Coquitlam",
                 "North Cowichan",
                 "Surrey",
                 "Cranbrook",
                 "North Vancouver",
+                "North Van",
                 "Terrace",
                 "Dawson Creek",
                 "North Vancouver",
@@ -90,26 +95,29 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 "Port Hardy"
             ],
             'public_holidays' => [ // day-month-year => 23-09-2020
-                '17-09-2020'
             ],
             'zone_1'          => [
-                "West Vancouver",
-                "North Vancouver",
-                "Downtown",
-                "Surrey",
-                "Delta",
-                "White Rock",
-                "Coquitlam",
-                "Maple Ridge",
-                "Langley"
+                "west vancouver",
+                "north vancouver",
+                "west van",
+                "north van",
+                "downtown",
+                "surrey",
+                "delta",
+                "white rock",
+                "coquitlam",
+                "maple ridge",
+                "langley"
             ],
             'zone_2'          => [
-                "Richmond",
-                "Vancouver",
-                "Burnaby",
-                "New Westminster",
-                "Lougheed"
-            ]
+                "richmond",
+                "vancouver",
+                "burnaby",
+                "new westminster",
+                "new west",
+                "lougheed"
+            ],
+            'bag_id'          => 1530, // bag product id
         ]);
     }
 

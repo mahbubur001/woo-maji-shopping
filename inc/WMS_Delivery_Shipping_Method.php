@@ -11,7 +11,7 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
 
             $this->id = 'wms_delivery_shipping';
             $this->instance_id = absint($instance_id);
-            $this->method_title = __('Delivery (Usually afternoon 1pm to 6pm)', "woo-maji-shopping");
+            $this->method_title = __('Delivery (Usually 6:00pm - 10:30pm)', "woo-maji-shopping");
             $this->method_description = __('Local delivery within the lower mainland', "woo-maji-shopping");
             $this->supports = array(
                 'shipping-zones',
@@ -22,7 +22,7 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
 
             $this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
             $this->title = __('WMS Delivery Shipping', "woo-maji-shopping");
-            $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping');
+            $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Delivery (Usually 6:00pm - 10:30pm)', 'woo-maji-shopping');
             $this->init();
         }
 
@@ -34,8 +34,9 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
          */
         function init() {
             // Load the settings API
-            $this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
-            $this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+            $this->init_form_fields();
+            $this->init_settings();
+            $this->tax_status = $this->get_option( 'tax_status' );
             // Save settings in admin if you have any defined
             add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
         }
@@ -44,11 +45,21 @@ if (!class_exists('WMS_Delivery_Shipping_Method')) {
 
             $this->form_fields = array(
 
-                'title' => array(
-                    'title'       => __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping'),
+                'title'      => array(
+                    'title'       => __('Delivery (Usually 6:00pm - 10:30pm)', 'woo-maji-shopping'),
                     'type'        => 'text',
-                    'description' => __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping'),
-                    'default'     => __('Delivery (Usually afternoon 1pm to 6pm)', 'woo-maji-shopping')
+                    'description' => __('Delivery (Usually 6:00pm - 10:30pm)', 'woo-maji-shopping'),
+                    'default'     => __('Delivery (Usually 6:00pm - 10:30pm)', 'woo-maji-shopping')
+                ),
+                'tax_status' => array(
+                    'title'   => __('Tax status', 'woocommerce'),
+                    'type'    => 'select',
+                    'class'   => 'wc-enhanced-select',
+                    'default' => 'taxable',
+                    'options' => array(
+                        'taxable' => __('Taxable', 'woocommerce'),
+                        'none'    => _x('None', 'Tax status', 'woocommerce'),
+                    ),
                 ),
 
             );

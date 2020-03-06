@@ -188,7 +188,7 @@ class WMS_Hooks
     function add_delivery_date() {
         ?>
         <tr class="wms-pickup-date-tr">
-            <th><?php esc_html_e('Choice pickup date', 'woo-maji-shopping'); ?></th>
+            <th><?php esc_html_e('Choose pickup date', 'woo-maji-shopping'); ?></th>
             <td>
                 <div class="wms-pickup-date-wrap">
                     <input type="text" readonly="readonly" class="wms-date wms-pickup-date" autocomplete="off"
@@ -197,7 +197,7 @@ class WMS_Hooks
             </td>
         </tr>
         <tr class="wms-delivery-date-tr">
-            <th><?php esc_html_e('Choice delivery date', 'woo-maji-shopping'); ?></th>
+            <th><?php esc_html_e('Choose delivery date', 'woo-maji-shopping'); ?></th>
             <td>
                 <div class="wms-delivery-date-wrap">
                     <input type="text" readonly="readonly" class="wms-date wms-delivery-date" autocomplete="off"

@@ -1,7 +1,7 @@
 (function ($) {
     'use strict';
     let disableDates = [],
-        current_city = $('#billing_city').val() || '',
+        current_city = $('#billing_city').val().trim() || '',
         selectedShipping = $("#shipping_method input[name='shipping_method[0]']:checked").val(),
         public_holidays = maji.public_holidays || [],
         zone_1 = maji.zone_1.map(function (item) {
@@ -87,7 +87,7 @@
 
     $('body').on('updated_checkout', function () {
         disableDates = [];
-        current_city = $('#billing_city').val();
+        current_city = $('#billing_city').val().trim();
         if(jQuery("#shipping_method input[name='shipping_method[0]']:checked").val() == null){
             selectedShipping = jQuery('#shipping_method_0_wms_pickup_shipping6').val();
         }else{

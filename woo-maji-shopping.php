@@ -29,16 +29,17 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 'richmond'        => 9,
                 'burnaby'         => 9,
                 'vancouver'       => 9,
-                'new-westminster' => 9,
-                'new-west'        => 9,
                 'west-vancouver'  => 10,
-                'north-vancouver' => 10,
                 'west-van'        => 10,
-                'north-van'       => 10,
-                'surrey'          => 13,
-                'delta'           => 13,
-                'white-rock'      => 12,
-                'coquitlam'       => 14,
+                'coquitlam'       => 15,
+                'delta'           => 15,
+                'new-westminster' => 15,
+                'new-west'        => 15,
+                'north-vancouver' => 15,
+                'north-van'       => 15,
+                'surrey'          => 15,
+                'tsawwassen'      => 15,
+                'white-rock'      => 15,
                 /*'maple-ridge'     => 16,*/
                 /*'langley'         => 16,*/
                 /*'langley-city'    => 16,*/
@@ -97,25 +98,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             'public_holidays' => [ // day-month-year => 23-09-2020
             ],
             'zone_1'          => [
-                "west vancouver",
-                "north vancouver",
-                "west van",
-                "north van",
-                "downtown",
-                "surrey",
-                "delta",
-                "white rock",
-                "coquitlam",
-                "maple ridge",
-                "langley"
-            ],
-            'zone_2'          => [
+                "burnaby",
                 "richmond",
                 "vancouver",
-                "burnaby",
+                "north vancouver",
+                "north van",
+                "west vancouver",
+                "west van"
+            ],
+            'zone_2'          => [
+                "coquitlam",
+                "delta",
                 "new westminster",
                 "new west",
-                "lougheed"
+                "surrey",
+                "tsawwassen",
+                "white rock"
             ],
             'bag_id'          => 1530, // bag product id
         ]);

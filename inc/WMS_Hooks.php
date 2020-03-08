@@ -27,7 +27,7 @@ class WMS_Hooks
         add_action("woocommerce_email_after_order_table", [$this, "checkout_field_display_admin_user_order_meta"], 10, 1);
 
         // Add a special product at checkout page
-        add_action('woocommerce_checkout_before_customer_details', [$this, 'add_special_product_at_cart']);
+        //add_action('woocommerce_checkout_before_customer_details', [$this, 'add_special_product_at_cart']);
         // Validate the custom field.
         //add_filter('woocommerce_shipping_fields', [$this, 'shipping_state_fields'], 900, 1);
         //add_filter('woocommerce_billing_fields', [$this, 'billing_state_fields'], 900, 1);
